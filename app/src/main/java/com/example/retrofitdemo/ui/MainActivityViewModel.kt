@@ -11,11 +11,13 @@ import retrofit2.Response
 
 class MainActivityViewModel(private val repository: Repository): ViewModel() {
 
+    lateinit var postsResponse: MutableLiveData<Response<Posts>>
+    lateinit var uploadPostResponse: MutableLiveData<Response<Post>>
+    lateinit var postResponse: MutableLiveData<Response<Post>>
 
-    val postResponse: MutableLiveData<Response<Post>> = MutableLiveData()
-    val postsResponse: MutableLiveData<Response<Posts>> = MutableLiveData()
 
     fun getPost(postId:Int){
+        postResponse = MutableLiveData()
         viewModelScope.launch {
             val response = repository.getPost(postId)
             postResponse.value = response
@@ -23,9 +25,18 @@ class MainActivityViewModel(private val repository: Repository): ViewModel() {
     }
 
     fun getPosts(){
+        postsResponse = MutableLiveData()
         viewModelScope.launch {
             val response = repository.getPosts()
             postsResponse.value = response
+        }
+    }
+
+    fun uploadPost(post: Post){
+        uploadPostResponse = MutableLiveData()
+        viewModelScope.launch {
+            val response = repository.uploadPost(post)
+            uploadPostResponse.value = response
         }
     }
 }
