@@ -1,6 +1,5 @@
 package com.example.retrofitdemo.ui
 
-import android.icu.text.CaseMap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

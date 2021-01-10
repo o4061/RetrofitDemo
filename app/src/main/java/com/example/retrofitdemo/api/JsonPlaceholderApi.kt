@@ -1,6 +1,5 @@
 package com.example.retrofitdemo.api
 
-import android.icu.text.CaseMap
 import com.example.retrofitdemo.data.Post
 import com.example.retrofitdemo.data.Posts
 import retrofit2.Response
