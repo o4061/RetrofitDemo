@@ -17,4 +17,16 @@ class Repository {
     suspend fun uploadPost(post: Post): Response<Post> {
         return RetrofitInstance.API.uploadPost(post)
     }
+
+    suspend fun updatePost(post: Post): Response<Post> {
+        return RetrofitInstance.API.updatePost(post.id, post)
+    }
+
+    suspend fun deletePost(postId: Int): Response<Post> {
+        return RetrofitInstance.API.deletePost(postId)
+    }
+
+    suspend fun patchPost(post: Post): Response<Post> {
+        return RetrofitInstance.API.patchPost(post.id, post)
+    }
 }

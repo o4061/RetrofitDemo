@@ -7,27 +7,84 @@
     android:orientation="vertical"
     tools:context=".ui.MainActivity">
 
-    <Button
-        android:id="@+id/btnGetPost"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="get post" />
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnGetPosts"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btnGetPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:width="140dp"
+            android:text="get post" />
+
+        <Button
+            android:id="@+id/btnGetPosts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:width="140dp"
+            android:text="get posts" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="get posts" />
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnUploadPost"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btnUploadPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:width="140dp"
+            android:text="upload post" />
+
+        <Button
+            android:id="@+id/btnUpdatePost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:width="140dp"
+            android:text="update post" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="upload post" />
+        android:gravity="center"
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/btnDeletePost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:width="140dp"
+            android:text="delete post" />
+
+        <Button
+            android:id="@+id/btnPatchPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:width="140dp"
+            android:text="patch post" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView"

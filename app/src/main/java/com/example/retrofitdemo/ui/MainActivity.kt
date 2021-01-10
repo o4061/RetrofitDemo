@@ -20,8 +20,53 @@ class MainActivity : AppCompatActivity() {
 
         val repository = Repository()
         val viewModelFactory = MainActivityViewModelFactory(repository)
+
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainActivityViewModel::class.java)
 
+        btnPatchPost.setOnClickListener {
+            textView.text = null
+            viewModel.patchPost(Post(1, "patch title"))
+
+            viewModel.postResponse.observe(this, { response ->
+                if (response.isSuccessful) {
+                    textView.append(response.body().toString() + "\n")
+                    textView.append("code: " + response.code().toString())
+                } else {
+                    textView.text = response.errorBody().toString()
+                }
+            })
+        }
+
+
+
+        btnDeletePost.setOnClickListener {
+            textView.text = null
+            viewModel.deletePost(1)
+
+            viewModel.postResponse.observe(this, { response ->
+                if (response.isSuccessful) {
+                    textView.append("The post has been deleted!! \n")
+                    textView.append("code: " + response.code().toString())
+                } else {
+                    textView.text = response.errorBody().toString()
+                }
+            })
+        }
+
+
+        btnUpdatePost.setOnClickListener {
+            textView.text = null
+            viewModel.updatePost(Post(3, "changed!!!!"))
+
+            viewModel.postResponse.observe(this, { response ->
+                if (response.isSuccessful) {
+                    textView.append(response.body().toString() + "\n")
+                    textView.append("code: " + response.code().toString())
+                } else {
+                    textView.text = response.errorBody().toString()
+                }
+            })
+        }
 
         btnGetPost.setOnClickListener {
             textView.text = null
@@ -58,7 +103,7 @@ class MainActivity : AppCompatActivity() {
             textView.text = null
             viewModel.uploadPost(Post(6, "my new post"))
 
-            viewModel.uploadPostResponse.observe(this, { response ->
+            viewModel.postResponse.observe(this, { response ->
                 if (response.isSuccessful) {
                     textView.append(response.body().toString() + "\n")
                     textView.append("code: " + response.code().toString())
