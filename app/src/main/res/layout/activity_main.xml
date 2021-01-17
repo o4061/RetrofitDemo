@@ -86,11 +86,11 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView"
+    <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="15dp" />
-
+        android:layout_margin="15dp"
+        />
 
 </LinearLayout>
