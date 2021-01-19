@@ -11,14 +11,13 @@ import com.example.retrofitdemo.repository.Repository
 import com.example.retrofitdemo.utils.Communicator
 import com.example.retrofitdemo.utils.MainActivityViewModelFactory
 import com.example.retrofitdemo.utils.MessageType
+import com.example.retrofitdemo.utils.RequestType
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), Communicator {
 
-    private lateinit var viewModel: MainActivityViewModel
     private val createPostFragment = CreatePostFragment()
     private val showResultFragment = ShowResultFragment()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,92 +25,32 @@ class MainActivity : AppCompatActivity(), Communicator {
 
         val repository = Repository()
         val viewModelFactory = MainActivityViewModelFactory(repository)
-        var resultPost: Post
-        var resultCode: Int
-        var errorMessage: String
-
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainActivityViewModel::class.java)
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(MainActivityViewModel::class.java)
 
         // patch post
         btnPatchPost.setOnClickListener {
-            viewModel.patchPost(Post(1, "patch title"))
-
-            viewModel.postResponse.observe(this, { response ->
-                if (response.isSuccessful) {
-                    resultPost = Post(response.body()!!.id, response.body()!!.title)
-                    resultCode = response.code()
-
-                    sendPostToShowResultFragment(resultPost, resultCode)
-                } else {
-                    errorMessage = response.errorBody().toString()
-                    resultCode = response.code()
-
-                    sendErrorToShowResultFragment(errorMessage, resultCode)
-                }
-            })
+            callCreatePostFragment(RequestType.PATCH)
         }
-
 
         // delete post
         btnDeletePost.setOnClickListener {
-            viewModel.deletePost(1)
-
-            viewModel.postResponse.observe(this, { response ->
-                if (response.isSuccessful) {
-                    resultPost = Post(9, "The post deleted")
-                    resultCode = response.code()
-
-                    sendPostToShowResultFragment(resultPost, resultCode)
-                } else {
-                    errorMessage = response.errorBody().toString()
-                    resultCode = response.code()
-
-                    sendErrorToShowResultFragment(errorMessage, resultCode)
-                }
-            })
+            callCreatePostFragment(RequestType.DELETE)
         }
-
 
         // update post
         btnUpdatePost.setOnClickListener {
-            viewModel.updatePost(Post(13, "changed!!!!"))
-
-            viewModel.postResponse.observe(this, { response ->
-                if (response.isSuccessful) {
-                    resultPost = Post(response.body()!!.id, response.body()!!.title)
-                    resultCode = response.code()
-
-                    sendPostToShowResultFragment(resultPost, resultCode)
-                } else {
-                    errorMessage = response.errorBody().toString()
-                    resultCode = response.code()
-
-                    sendErrorToShowResultFragment(errorMessage, resultCode)
-                }
-            })
+            callCreatePostFragment(RequestType.UPDATE)
         }
 
+        // upload post
+        btnUploadPost.setOnClickListener {
+            callCreatePostFragment(RequestType.PATCH)
+        }
 
         // get post
         btnGetPost.setOnClickListener {
-            viewModel.getPost(2)
-
-            viewModel.postResponse.observe(this, { response ->
-                if (response.isSuccessful) {
-                    resultPost = Post(response.body()!!.id, response.body()!!.title)
-                    resultCode = response.code()
-
-                    sendPostToShowResultFragment(resultPost, resultCode)
-                } else {
-                    errorMessage = response.errorBody().toString()
-                    resultCode = response.code()
-
-                    sendErrorToShowResultFragment(errorMessage, resultCode)
-                }
-            })
+            callCreatePostFragment(RequestType.POST)
         }
-
 
         // get posts
         btnGetPosts.setOnClickListener {
@@ -128,27 +67,8 @@ class MainActivity : AppCompatActivity(), Communicator {
                     sendPostsToShowResultFragment(posts, codes)
 
                 } else {
-                    errorMessage = response.errorBody().toString()
-                    resultCode = response.code()
-
-                    sendErrorToShowResultFragment(errorMessage, resultCode)
-                }
-            })
-        }
-
-        // upload post
-        btnUploadPost.setOnClickListener {
-            viewModel.uploadPost(Post(6, "my new post"))
-
-            viewModel.postResponse.observe(this, { response ->
-                if (response.isSuccessful) {
-                    resultPost = Post(response.body()!!.id, response.body()!!.title)
-                    resultCode = response.code()
-
-                    sendPostToShowResultFragment(resultPost, resultCode)
-                } else {
-                    errorMessage = response.errorBody().toString()
-                    resultCode = response.code()
+                    val errorMessage = response.errorBody().toString()
+                    val resultCode = response.code()
 
                     sendErrorToShowResultFragment(errorMessage, resultCode)
                 }
@@ -161,6 +81,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         bundle.putSerializable("POST", post)
         bundle.putInt("CODE", code)
         bundle.putString("MSG_TYPE", MessageType.POST_RESULT.toString())
+
         showResultFragment.arguments = bundle
 
         this.supportFragmentManager.beginTransaction().apply {
@@ -171,10 +92,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         }
     }
 
-    override fun sendErrorToShowResultFragment(
-        errorMessage: String,
-        code: Int
-    ) {
+    override fun sendErrorToShowResultFragment(errorMessage: String, code: Int) {
         val bundle = Bundle()
         bundle.putString("ERROR_MESSAGE", errorMessage)
         bundle.putInt("CODE", code)
@@ -201,6 +119,20 @@ class MainActivity : AppCompatActivity(), Communicator {
         this.supportFragmentManager.beginTransaction().apply {
             remove(showResultFragment)
             replace(R.id.frameLayout, showResultFragment)
+            addToBackStack(null)
+            commit()
+        }
+    }
+
+    override fun callCreatePostFragment(requestType: RequestType) {
+        val bundle = Bundle()
+        bundle.putString("TYPE", requestType.toString())
+
+        createPostFragment.arguments = bundle
+
+        this.supportFragmentManager.beginTransaction().apply {
+            remove(createPostFragment)
+            replace(R.id.frameLayout, createPostFragment)
             addToBackStack(null)
             commit()
         }

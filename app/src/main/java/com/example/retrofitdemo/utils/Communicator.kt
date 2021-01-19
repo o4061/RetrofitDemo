@@ -8,4 +8,5 @@ interface Communicator {
     fun sendPostToShowResultFragment(post: Post, code: Int)
     fun sendErrorToShowResultFragment(errorMessage: String, code: Int)
     fun sendPostsToShowResultFragment(posts: Posts, codes: Codes)
+    fun callCreatePostFragment(requestType: RequestType)
 }

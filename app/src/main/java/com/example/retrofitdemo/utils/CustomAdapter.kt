@@ -22,7 +22,7 @@ class CustomAdapter(var mCtx: Context, var resources: Int, var items: List<Model
         val mItem: Model = items[position]
 
         if (mItem.code == 200 || mItem.code == 201) {
-            postTextView.text = mItem.post.title
+            postTextView.text = mItem.post.id.toString() + ") " + mItem.post.title
             codeTextView.text = mItem.code.toString()
             codeTextView.setTextColor(Color.GREEN)
         } else if (mItem.code != 200 && mItem.code != 201) {

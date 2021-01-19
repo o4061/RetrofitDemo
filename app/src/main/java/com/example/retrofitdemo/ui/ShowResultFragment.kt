@@ -1,8 +1,6 @@
 package com.example.retrofitdemo.ui
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,13 +20,6 @@ class ShowResultFragment : Fragment() {
     private lateinit var post: Post
     private lateinit var posts: Posts
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        Log.d("message----------", "click")
-    }
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,11 +29,10 @@ class ShowResultFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_show_result, container, false)
         val code = arguments?.getInt("CODE")
         val errorMsg = arguments?.getString("ERROR_MESSAGE")
+        val msgType = arguments?.getString("MSG_TYPE")
         val listView = view.listView
         val list = mutableListOf<Model>()
-
         var index = 0
-        var msgType = arguments?.getString("MSG_TYPE")
 
 
         if (!errorMsg.isNullOrEmpty()) {
