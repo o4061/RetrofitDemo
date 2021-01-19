@@ -1,6 +1,8 @@
 package com.example.retrofitdemo.ui
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,8 +22,18 @@ class ShowResultFragment : Fragment() {
     private lateinit var post: Post
     private lateinit var posts: Posts
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Log.d("message----------", "click")
+    }
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         val view = inflater.inflate(R.layout.fragment_show_result, container, false)
         val code = arguments?.getInt("CODE")

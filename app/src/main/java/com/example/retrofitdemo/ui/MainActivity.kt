@@ -1,15 +1,15 @@
 package com.example.retrofitdemo.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.retrofitdemo.utils.MainActivityViewModelFactory
 import com.example.retrofitdemo.R
 import com.example.retrofitdemo.data.Codes
 import com.example.retrofitdemo.data.Post
 import com.example.retrofitdemo.data.Posts
 import com.example.retrofitdemo.repository.Repository
 import com.example.retrofitdemo.utils.Communicator
+import com.example.retrofitdemo.utils.MainActivityViewModelFactory
 import com.example.retrofitdemo.utils.MessageType
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity(), Communicator {
     private lateinit var viewModel: MainActivityViewModel
     private val createPostFragment = CreatePostFragment()
     private val showResultFragment = ShowResultFragment()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         var resultPost: Post
         var resultCode: Int
         var errorMessage: String
+
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainActivityViewModel::class.java)
 
@@ -162,6 +164,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         showResultFragment.arguments = bundle
 
         this.supportFragmentManager.beginTransaction().apply {
+            remove(showResultFragment)
             replace(R.id.frameLayout, showResultFragment)
             addToBackStack(null)
             commit()
@@ -180,6 +183,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         showResultFragment.arguments = bundle
 
         this.supportFragmentManager.beginTransaction().apply {
+            remove(showResultFragment)
             replace(R.id.frameLayout, showResultFragment)
             addToBackStack(null)
             commit()
@@ -195,6 +199,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         showResultFragment.arguments = bundle
 
         this.supportFragmentManager.beginTransaction().apply {
+            remove(showResultFragment)
             replace(R.id.frameLayout, showResultFragment)
             addToBackStack(null)
             commit()
