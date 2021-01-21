@@ -1,4 +1,4 @@
-package com.example.retrofitdemo.utils
+package com.example.retrofitdemo.adapter
 
 import android.content.Context
 import android.graphics.Color

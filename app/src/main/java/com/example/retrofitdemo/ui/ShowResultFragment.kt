@@ -10,7 +10,7 @@ import com.example.retrofitdemo.data.Codes
 import com.example.retrofitdemo.data.Model
 import com.example.retrofitdemo.data.Post
 import com.example.retrofitdemo.data.Posts
-import com.example.retrofitdemo.utils.CustomAdapter
+import com.example.retrofitdemo.adapter.CustomAdapter
 import com.example.retrofitdemo.utils.MessageType
 import kotlinx.android.synthetic.main.fragment_show_result.view.*
 
