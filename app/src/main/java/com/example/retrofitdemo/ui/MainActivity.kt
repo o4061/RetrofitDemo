@@ -8,6 +8,8 @@ import com.example.retrofitdemo.data.Codes
 import com.example.retrofitdemo.data.Post
 import com.example.retrofitdemo.data.Posts
 import com.example.retrofitdemo.repository.Repository
+import com.example.retrofitdemo.ui.fragments.CreatePostFragment
+import com.example.retrofitdemo.ui.fragments.ShowResultFragment
 import com.example.retrofitdemo.utils.Communicator
 import com.example.retrofitdemo.utils.MainActivityViewModelFactory
 import com.example.retrofitdemo.utils.MessageType

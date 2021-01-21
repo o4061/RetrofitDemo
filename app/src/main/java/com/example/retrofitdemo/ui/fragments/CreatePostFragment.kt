@@ -1,4 +1,4 @@
-package com.example.retrofitdemo.ui
+package com.example.retrofitdemo.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.retrofitdemo.R
 import com.example.retrofitdemo.data.Post
 import com.example.retrofitdemo.repository.Repository
+import com.example.retrofitdemo.ui.MainActivityViewModel
 import com.example.retrofitdemo.utils.Communicator
 import com.example.retrofitdemo.utils.MainActivityViewModelFactory
 import com.example.retrofitdemo.utils.RequestType
