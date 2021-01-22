@@ -10,10 +10,7 @@ import com.example.retrofitdemo.data.Posts
 import com.example.retrofitdemo.repository.Repository
 import com.example.retrofitdemo.ui.fragments.CreatePostFragment
 import com.example.retrofitdemo.ui.fragments.ShowResultFragment
-import com.example.retrofitdemo.utils.Communicator
-import com.example.retrofitdemo.utils.MainActivityViewModelFactory
-import com.example.retrofitdemo.utils.MessageType
-import com.example.retrofitdemo.utils.RequestType
+import com.example.retrofitdemo.utils.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), Communicator {
@@ -21,60 +18,74 @@ class MainActivity : AppCompatActivity(), Communicator {
     private val createPostFragment = CreatePostFragment()
     private val showResultFragment = ShowResultFragment()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val repository = Repository()
         val viewModelFactory = MainActivityViewModelFactory(repository)
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(MainActivityViewModel::class.java)
+        val viewModel =
+            ViewModelProvider(this, viewModelFactory).get(MainActivityViewModel::class.java)
 
         // patch post
         btnPatchPost.setOnClickListener {
-            callCreatePostFragment(RequestType.PATCH)
+            if (checkNetwork()) {
+                callCreatePostFragment(RequestType.PATCH)
+            }
         }
 
         // delete post
         btnDeletePost.setOnClickListener {
-            callCreatePostFragment(RequestType.DELETE)
+            if (checkNetwork()) {
+                callCreatePostFragment(RequestType.DELETE)
+            }
         }
 
         // update post
         btnUpdatePost.setOnClickListener {
-            callCreatePostFragment(RequestType.UPDATE)
+            if (checkNetwork()) {
+                callCreatePostFragment(RequestType.UPDATE)
+            }
         }
 
         // upload post
         btnUploadPost.setOnClickListener {
-            callCreatePostFragment(RequestType.PATCH)
+            if (checkNetwork()) {
+                callCreatePostFragment(RequestType.PATCH)
+            }
         }
 
         // get post
         btnGetPost.setOnClickListener {
-            callCreatePostFragment(RequestType.POST)
+            if (checkNetwork()) {
+                callCreatePostFragment(RequestType.POST)
+            }
         }
 
         // get posts
         btnGetPosts.setOnClickListener {
-            viewModel.getPosts()
-            val posts = Posts()
-            val codes = Codes()
+            if (checkNetwork()) {
+                viewModel.getPosts()
+                val posts = Posts()
+                val codes = Codes()
 
-            viewModel.postsResponse.observe(this, { response ->
-                if (response.isSuccessful) {
-                    response.body()?.forEach {
-                        posts.add(Post(it.id, it.title))
-                        codes.add(response.code())
+                viewModel.postsResponse.observe(this, { response ->
+                    if (response.isSuccessful) {
+                        response.body()?.forEach {
+                            posts.add(Post(it.id, it.title))
+                            codes.add(response.code())
+                        }
+                        sendPostsToShowResultFragment(posts, codes)
+
+                    } else {
+                        val errorMessage = response.errorBody().toString()
+                        val resultCode = response.code()
+
+                        sendErrorToShowResultFragment(errorMessage, resultCode)
                     }
-                    sendPostsToShowResultFragment(posts, codes)
-
-                } else {
-                    val errorMessage = response.errorBody().toString()
-                    val resultCode = response.code()
-
-                    sendErrorToShowResultFragment(errorMessage, resultCode)
-                }
-            })
+                })
+            }
         }
     }
 
@@ -138,5 +149,10 @@ class MainActivity : AppCompatActivity(), Communicator {
             addToBackStack(null)
             commit()
         }
+    }
+
+    fun checkNetwork(): Boolean {
+        val network = NetworkListener()
+        return network.checkNetworkAvailability(this)
     }
 }
