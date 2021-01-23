@@ -50,7 +50,7 @@ class ShowResultFragment : Fragment() {
             list.add(Model(post, code!!.toInt()))
         }
 
-        listView.adapter = CustomAdapter(context!!, R.layout.list_object, list)
+        listView.adapter = CustomAdapter(requireContext(), R.layout.list_object, list)
         return view
     }
 }

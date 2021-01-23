@@ -1,10 +1,12 @@
 package com.example.retrofitdemo.ui
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.retrofitdemo.data.Post
 import com.example.retrofitdemo.data.Posts
+import com.example.retrofitdemo.entities.PostDB
 import com.example.retrofitdemo.repository.Repository
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -13,6 +15,8 @@ class MainActivityViewModel(private val repository: Repository) : ViewModel() {
 
     lateinit var postsResponse: MutableLiveData<Response<Posts>>
     lateinit var postResponse: MutableLiveData<Response<Post>>
+    lateinit var postsDb: MutableLiveData<Posts>
+    lateinit var postDb: MutableLiveData<Post>
 
     fun getPost(postId: Int) {
         postResponse = MutableLiveData()
@@ -61,4 +65,32 @@ class MainActivityViewModel(private val repository: Repository) : ViewModel() {
             postResponse.value = response
         }
     }
+
+    fun getPostsFromDb(context: Context) {
+        postsDb = MutableLiveData()
+        viewModelScope.launch {
+            val response = repository.getPostsFromDb(context)
+            val curPosts = Posts()
+            response.forEach {
+                curPosts.add(Post(it.id, it.title))
+            }
+            postsDb.value = curPosts
+        }
+    }
+
+    fun getPostFromDb(context: Context, postId: Int) {
+        postDb = MutableLiveData()
+        viewModelScope.launch {
+            val response = repository.getPostFromDb(context, postId)
+            postDb.value = Post(response.id, response.title)
+        }
+    }
+
+    fun addPosts(context: Context, postsDb: List<PostDB> ) {
+        viewModelScope.launch {
+            repository.addPostsToDb(context, postsDb)
+        }
+    }
+
+
 }

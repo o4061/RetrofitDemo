@@ -50,7 +50,7 @@ class CreatePostFragment : Fragment() {
                     RequestType.DELETE.toString() -> {
                         viewModel.deletePost(id)
 
-                        viewModel.postResponse.observe(this, { response ->
+                        viewModel.postResponse.observe(viewLifecycleOwner, { response ->
                             if (response.isSuccessful) {
                                 resultPost = Post(id, "The post deleted")
                                 resultCode = response.code()
@@ -68,7 +68,7 @@ class CreatePostFragment : Fragment() {
                     RequestType.PATCH.toString() -> {
                         viewModel.patchPost(Post(id, title))
 
-                        viewModel.postResponse.observe(this, { response ->
+                        viewModel.postResponse.observe(viewLifecycleOwner, { response ->
                             if (response.isSuccessful) {
                                 resultPost = Post(response.body()!!.id, response.body()!!.title)
                                 resultCode = response.code()
@@ -86,7 +86,7 @@ class CreatePostFragment : Fragment() {
                     RequestType.UPDATE.toString() -> {
                         viewModel.updatePost(Post(id, title))
 
-                        viewModel.postResponse.observe(this, { response ->
+                        viewModel.postResponse.observe(viewLifecycleOwner, { response ->
                             if (response.isSuccessful) {
                                 resultPost = Post(response.body()!!.id, response.body()!!.title)
                                 resultCode = response.code()
@@ -103,7 +103,7 @@ class CreatePostFragment : Fragment() {
                     RequestType.UPLOAD.toString() -> {
                         viewModel.uploadPost(Post(id, title))
 
-                        viewModel.postResponse.observe(this, { response ->
+                        viewModel.postResponse.observe(viewLifecycleOwner, { response ->
                             if (response.isSuccessful) {
                                 resultPost = Post(response.body()!!.id, response.body()!!.title)
                                 resultCode = response.code()
@@ -121,7 +121,7 @@ class CreatePostFragment : Fragment() {
                     RequestType.POST.toString() -> {
                         viewModel.getPost(id)
 
-                        viewModel.postResponse.observe(this, { response ->
+                        viewModel.postResponse.observe(viewLifecycleOwner, { response ->
                             if (response.isSuccessful) {
                                 resultPost = Post(response.body()!!.id, response.body()!!.title)
                                 resultCode = response.code()
