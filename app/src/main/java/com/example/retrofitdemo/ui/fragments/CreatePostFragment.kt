@@ -21,20 +21,25 @@ class CreatePostFragment : Fragment() {
     private var resultCode: Int = 0
     private lateinit var errorMessage: String
 
+    companion object {
+        fun newInstance(requestType: RequestType): CreatePostFragment {
+            val bundle = Bundle()
+            bundle.putString("TYPE", requestType.toString())
+            val fragment = CreatePostFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val repository = Repository()
-        val viewModelFactory = MainActivityViewModelFactory(repository)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val communicator = activity as Communicator
+        val repository = Repository()
+        val viewModelFactory = MainActivityViewModelFactory(repository)
         val viewModel =
             ViewModelProvider(this, viewModelFactory).get(MainActivityViewModel::class.java)
 
-        val view = inflater.inflate(R.layout.fragment_create_post, container, false)
         val requestType = arguments?.getString("TYPE")
 
         if (requestType == RequestType.DELETE.toString() || requestType == RequestType.POST.toString()) {
@@ -138,7 +143,14 @@ class CreatePostFragment : Fragment() {
                 }
             }
         }
-        return view
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_create_post, container, false)
     }
 
     private fun check(view: View): Boolean {

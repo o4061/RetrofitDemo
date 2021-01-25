@@ -91,6 +91,4 @@ class MainActivityViewModel(private val repository: Repository) : ViewModel() {
             repository.addPostsToDb(context, postsDb)
         }
     }
-
-
 }
