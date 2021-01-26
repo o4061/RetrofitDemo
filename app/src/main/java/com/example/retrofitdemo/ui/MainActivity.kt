@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         fragmentTransaction(createPostFragment)
     }
 
-    private fun fragmentTransaction(fragment: Fragment){
+    private fun fragmentTransaction(fragment: Fragment) {
         this.supportFragmentManager.beginTransaction().apply {
             remove(fragment)
             replace(R.id.frameLayout, fragment)
