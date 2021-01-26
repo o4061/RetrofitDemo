@@ -3,6 +3,7 @@ package com.example.retrofitdemo.ui
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.retrofitdemo.R
 import com.example.retrofitdemo.data.Codes
@@ -31,45 +32,40 @@ class MainActivity : AppCompatActivity(), Communicator {
         btnPatchPost.setOnClickListener {
             if (checkNetwork()) {
                 callCreatePostFragment(RequestType.PATCH)
-            } else {
+            } else
                 Toast.makeText(this, "No internet Connection", Toast.LENGTH_SHORT).show()
-            }
         }
 
         // delete post
         btnDeletePost.setOnClickListener {
             if (checkNetwork()) {
                 callCreatePostFragment(RequestType.DELETE)
-            } else {
+            } else
                 Toast.makeText(this, "No internet Connection", Toast.LENGTH_SHORT).show()
-            }
         }
 
         // update post
         btnUpdatePost.setOnClickListener {
             if (checkNetwork()) {
                 callCreatePostFragment(RequestType.UPDATE)
-            } else {
+            } else
                 Toast.makeText(this, "No internet Connection", Toast.LENGTH_SHORT).show()
-            }
         }
 
         // upload post
         btnUploadPost.setOnClickListener {
             if (checkNetwork()) {
                 callCreatePostFragment(RequestType.PATCH)
-            } else {
+            } else
                 Toast.makeText(this, "No internet Connection", Toast.LENGTH_SHORT).show()
-            }
         }
 
         // get post
         btnGetPost.setOnClickListener {
             if (checkNetwork()) {
                 callCreatePostFragment(RequestType.POST)
-            } else {
+            } else
                 Toast.makeText(this, "No internet Connection", Toast.LENGTH_SHORT).show()
-            }
         }
 
         // get posts
@@ -98,11 +94,15 @@ class MainActivity : AppCompatActivity(), Communicator {
             } else {
                 viewModel.getPostsFromDb(this)
                 viewModel.postsDb.observe(this, { response ->
-                    response.forEach {
-                        posts.add(Post(it.id, it.title))
-                        codes.add(0)
+                    if (response.isEmpty()) {
+                        Toast.makeText(this, "DataBase is empty", Toast.LENGTH_SHORT).show()
+                    } else {
+                        response.forEach {
+                            posts.add(Post(it.id, it.title))
+                            codes.add(0)
+                        }
+                        sendPostsToShowResultFragment(posts, codes)
                     }
-                    sendPostsToShowResultFragment(posts, codes)
                 })
             }
         }
@@ -112,44 +112,33 @@ class MainActivity : AppCompatActivity(), Communicator {
         val showResultFragment =
             ShowResultFragment.newInstancePost(post, code, MessageType.POST_RESULT)
 
-        this.supportFragmentManager.beginTransaction().apply {
-            remove(showResultFragment)
-            replace(R.id.frameLayout, showResultFragment)
-            addToBackStack(null)
-            commit()
-        }
+        fragmentTransaction(showResultFragment)
     }
 
     override fun sendErrorToShowResultFragment(errorMessage: String, code: Int) {
         val showResultFragment =
             ShowResultFragment.newInstanceError(errorMessage, code, MessageType.ERROR_MESSAGE)
 
-        this.supportFragmentManager.beginTransaction().apply {
-            remove(showResultFragment)
-            replace(R.id.frameLayout, showResultFragment)
-            addToBackStack(null)
-            commit()
-        }
+        fragmentTransaction(showResultFragment)
     }
 
     override fun sendPostsToShowResultFragment(posts: Posts, codes: Codes) {
         val showResultFragment =
             ShowResultFragment.newInstancePosts(posts, codes, MessageType.POSTS_RESULTS)
 
-        this.supportFragmentManager.beginTransaction().apply {
-            remove(showResultFragment)
-            replace(R.id.frameLayout, showResultFragment)
-            addToBackStack(null)
-            commit()
-        }
+        fragmentTransaction(showResultFragment)
     }
 
     override fun callCreatePostFragment(requestType: RequestType) {
         val createPostFragment = CreatePostFragment.newInstance(requestType)
 
+        fragmentTransaction(createPostFragment)
+    }
+
+    private fun fragmentTransaction(fragment: Fragment){
         this.supportFragmentManager.beginTransaction().apply {
-            remove(createPostFragment)
-            replace(R.id.frameLayout, createPostFragment)
+            remove(fragment)
+            replace(R.id.frameLayout, fragment)
             addToBackStack(null)
             commit()
         }

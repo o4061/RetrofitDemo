@@ -44,5 +44,4 @@ class Repository {
     suspend fun addPostsToDb(context: Context, posts: List<PostDB>) {
         return PostDatabase.getInstance(context).postDao().addPosts(posts)
     }
-
 }
