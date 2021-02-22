@@ -1,4 +1,4 @@
-package com.example.retrofitdemo.ui.fragments
+package com.example.retrofitdemo.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.retrofitdemo.R
 import com.example.retrofitdemo.data.Codes
-import com.example.retrofitdemo.data.Model
+import com.example.retrofitdemo.data.LayoutPost
 import com.example.retrofitdemo.data.Post
 import com.example.retrofitdemo.data.Posts
-import com.example.retrofitdemo.adapter.MyAdapter
-import com.example.retrofitdemo.utils.MessageType
+import com.example.retrofitdemo.ui.adapter.PostAdapter
+import com.example.retrofitdemo.data.enums.MessageType
 import kotlinx.android.synthetic.main.fragment_show_result.view.*
 
 class ShowResultFragment : Fragment() {
@@ -68,25 +68,29 @@ class ShowResultFragment : Fragment() {
         val code = arguments?.getInt("CODE")
         val errorMsg = arguments?.getString("ERROR_MESSAGE")
         val msgType = arguments?.getString("MSG_TYPE")
-        val list = mutableListOf<Model>()
+        val list = mutableListOf<LayoutPost>()
         var index = 0
 
 
         if (!errorMsg.isNullOrEmpty()) {
-            list.add(Model(Post(0, errorMsg), code!!.toInt()))
+            if (code != null) {
+                list.add(LayoutPost(Post(0, errorMsg), code.toInt()))
+            }
         } else if (msgType.equals(MessageType.POSTS_RESULTS.toString())) {
             val posts = arguments?.getParcelable<Posts>("POSTS") as Posts
             val codes = arguments?.getParcelable<Codes>("CODES") as Codes
             posts.forEach {
-                list.add(Model(Post(it.id, it.title), codes[index]))
+                list.add(LayoutPost(Post(it.id, it.title), codes[index]))
                 index++
             }
         } else if (msgType.equals(MessageType.POST_RESULT.toString())) {
             val post = arguments?.getParcelable<Post>("POST") as Post
-            list.add(Model(post, code!!.toInt()))
+            if (code != null) {
+                list.add(LayoutPost(post, code.toInt()))
+            }
         }
 
-        val adapter = MyAdapter(list)
+        val adapter = PostAdapter(list)
         view.recyclerView.adapter = adapter
         view.recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }

@@ -5,7 +5,7 @@ import com.example.retrofitdemo.api.RetrofitInstance
 import com.example.retrofitdemo.data.Post
 import com.example.retrofitdemo.data.Posts
 import com.example.retrofitdemo.database.PostDatabase
-import com.example.retrofitdemo.entities.PostDB
+import com.example.retrofitdemo.database.entities.PostDB
 import retrofit2.Response
 
 class Repository {
@@ -35,10 +35,6 @@ class Repository {
 
     suspend fun getPostsFromDb(context: Context): List<PostDB> {
         return PostDatabase.getInstance(context).postDao().getPostsFromDb()
-    }
-
-    suspend fun getPostFromDb(context: Context, postId: Int): PostDB {
-        return PostDatabase.getInstance(context).postDao().getPostFromDb(postId)
     }
 
     suspend fun addPostsToDb(context: Context, posts: List<PostDB>) {

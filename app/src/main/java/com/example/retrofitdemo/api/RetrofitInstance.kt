@@ -1,6 +1,6 @@
 package com.example.retrofitdemo.api
 
-import com.example.retrofitdemo.utils.Constants.Companion.BASE_URL
+import com.example.retrofitdemo.constants.Constants.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

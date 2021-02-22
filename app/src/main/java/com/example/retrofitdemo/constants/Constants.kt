@@ -1,10 +1,7 @@
-package com.example.retrofitdemo.utils
+package com.example.retrofitdemo.constants
 
 class Constants {
-
-    companion object{
+    companion object {
         const val BASE_URL = "https://my-json-server.typicode.com/o4061/mockjson/"
     }
-
-
 }

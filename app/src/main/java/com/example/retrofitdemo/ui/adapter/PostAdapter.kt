@@ -1,31 +1,29 @@
-package com.example.retrofitdemo.adapter
+package com.example.retrofitdemo.ui.adapter
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitdemo.R
-import com.example.retrofitdemo.data.Model
-import kotlinx.android.synthetic.main.list_object.view.*
+import com.example.retrofitdemo.data.LayoutPost
+import kotlinx.android.synthetic.main.post_object.view.*
 
-
-class MyAdapter(
-    private val models: List<Model>
-) : RecyclerView.Adapter<MyAdapter.MyAdapterViewHolder>() {
+class PostAdapter(
+    private val layoutPosts: List<LayoutPost>
+) : RecyclerView.Adapter<PostAdapter.MyAdapterViewHolder>() {
 
     inner class MyAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAdapterViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_object, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.post_object, parent, false)
         return MyAdapterViewHolder(view)
     }
 
-    override fun getItemCount() = models.size
+    override fun getItemCount() = layoutPosts.size
 
     override fun onBindViewHolder(holder: MyAdapterViewHolder, position: Int) {
-        val currentItem = models[position]
+        val currentItem = layoutPosts[position]
 
         holder.itemView.apply {
             if (currentItem.code == 200 || currentItem.code == 201 || currentItem.code == 0) {

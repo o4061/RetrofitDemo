@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.retrofitdemo.entities.PostDB
+import com.example.retrofitdemo.database.entities.PostDB
 
 @Database(
     entities = [PostDB::class],
@@ -14,6 +14,7 @@ import com.example.retrofitdemo.entities.PostDB
 abstract class PostDatabase : RoomDatabase() {
 
     abstract fun postDao(): PostDao
+
     companion object {
         @Volatile
         private var INSTANCE: PostDatabase? = null
@@ -25,8 +26,8 @@ abstract class PostDatabase : RoomDatabase() {
                     PostDatabase::class.java,
                     "post_database"
                 ).fallbackToDestructiveMigration()
-                    .build().also {
-                        INSTANCE = it
+                    .build().apply {
+                        INSTANCE = this
                     }
             }
         }

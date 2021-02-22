@@ -8,7 +8,6 @@ class Codes() : ArrayList<Int>(), Parcelable {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-
     }
 
     override fun describeContents(): Int {

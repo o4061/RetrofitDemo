@@ -1,4 +1,4 @@
-package com.example.retrofitdemo.ui
+package com.example.retrofitdemo.ui.activity.startPage
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
@@ -6,17 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.retrofitdemo.data.Post
 import com.example.retrofitdemo.data.Posts
-import com.example.retrofitdemo.entities.PostDB
+import com.example.retrofitdemo.database.entities.PostDB
 import com.example.retrofitdemo.repository.Repository
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class MainActivityViewModel(private val repository: Repository) : ViewModel() {
+class StartPageViewModel(private val repository: Repository) : ViewModel() {
 
     lateinit var postsResponse: MutableLiveData<Response<Posts>>
     lateinit var postResponse: MutableLiveData<Response<Post>>
     lateinit var postsDb: MutableLiveData<Posts>
-    lateinit var postDb: MutableLiveData<Post>
 
     fun getPost(postId: Int) {
         postResponse = MutableLiveData()
@@ -75,14 +74,6 @@ class MainActivityViewModel(private val repository: Repository) : ViewModel() {
                 curPosts.add(Post(it.id, it.title))
             }
             postsDb.value = curPosts
-        }
-    }
-
-    fun getPostFromDb(context: Context, postId: Int) {
-        postDb = MutableLiveData()
-        viewModelScope.launch {
-            val response = repository.getPostFromDb(context, postId)
-            postDb.value = Post(response.id, response.title)
         }
     }
 

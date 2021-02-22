@@ -1,4 +1,4 @@
-package com.example.retrofitdemo.entities
+package com.example.retrofitdemo.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
