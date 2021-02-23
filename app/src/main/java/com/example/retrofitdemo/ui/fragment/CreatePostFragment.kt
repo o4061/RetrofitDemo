@@ -86,8 +86,10 @@ class CreatePostFragment : Fragment() {
 
         viewModel.postResponse.observe(viewLifecycleOwner, { response ->
             if (response.isSuccessful) {
-                resultPost = Post(response.body()!!.id, response.body()?.title)
-                resultCode = response.code()
+                response.body()?.let {
+                    resultPost = Post(it.id, it.title)
+                    resultCode = response.code()
+                }
 
                 communicator.sendPostToShowResultFragment(resultPost, resultCode)
             } else {
@@ -104,8 +106,10 @@ class CreatePostFragment : Fragment() {
 
         viewModel.postResponse.observe(viewLifecycleOwner, { response ->
             if (response.isSuccessful) {
-                resultPost = Post(response.body()!!.id, response.body()?.title)
-                resultCode = response.code()
+                response.body()?.let {
+                    resultPost = Post(it.id, it.title)
+                    resultCode = response.code()
+                }
 
                 communicator.sendPostToShowResultFragment(resultPost, resultCode)
             } else {
@@ -122,8 +126,10 @@ class CreatePostFragment : Fragment() {
 
         viewModel.postResponse.observe(viewLifecycleOwner, { response ->
             if (response.isSuccessful) {
-                resultPost = Post(response.body()!!.id, response.body()?.title)
-                resultCode = response.code()
+                response.body()?.let {
+                    resultPost = Post(it.id, it.title)
+                    resultCode = response.code()
+                }
 
                 communicator.sendPostToShowResultFragment(resultPost, resultCode)
             } else {
@@ -139,7 +145,7 @@ class CreatePostFragment : Fragment() {
         viewModel.deletePost(post.id)
 
         viewModel.postResponse.observe(viewLifecycleOwner, { response ->
-            if (response.isSuccessful) {
+            if (response.isSuccessful){
                 resultPost = Post(post.id, "The post deleted")
                 resultCode = response.code()
 
@@ -158,8 +164,10 @@ class CreatePostFragment : Fragment() {
 
         viewModel.postResponse.observe(viewLifecycleOwner, { response ->
             if (response.isSuccessful) {
-                resultPost = Post(response.body()!!.id, response.body()?.title)
-                resultCode = response.code()
+                response.body()?.let {
+                    resultPost = Post(it.id, it.title)
+                    resultCode = response.code()
+                }
 
                 communicator.sendPostToShowResultFragment(resultPost, resultCode)
             } else {

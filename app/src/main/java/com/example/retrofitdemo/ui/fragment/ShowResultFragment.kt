@@ -19,12 +19,15 @@ class ShowResultFragment : Fragment() {
 
     companion object {
         private val bundle = Bundle()
-        fun newInstancePost(post: Post, code: Int, msgType: MessageType): ShowResultFragment {
-            bundle.putParcelable("POST", post)
-            bundle.putInt("CODE", code)
-            bundle.putString("MSG_TYPE", msgType.toString())
+        private val fragment = ShowResultFragment()
 
-            val fragment = ShowResultFragment()
+        fun newInstancePost(post: Post, code: Int, msgType: MessageType): ShowResultFragment {
+            bundle.apply {
+                putParcelable("POST", post)
+                putInt("CODE", code)
+                putString("MSG_TYPE", msgType.toString())
+            }
+
             fragment.arguments = bundle
             return fragment
         }
@@ -34,21 +37,23 @@ class ShowResultFragment : Fragment() {
             code: Int,
             msgType: MessageType
         ): ShowResultFragment {
-            bundle.putString("ERROR_MESSAGE", errorMessage)
-            bundle.putInt("CODE", code)
-            bundle.putString("MSG_TYPE", msgType.toString())
+            bundle.apply {
+                putString("ERROR_MESSAGE", errorMessage)
+                putInt("CODE", code)
+                putString("MSG_TYPE", msgType.toString())
+            }
 
-            val fragment = ShowResultFragment()
             fragment.arguments = bundle
             return fragment
         }
 
         fun newInstancePosts(posts: Posts, codes: Codes, msgType: MessageType): ShowResultFragment {
-            bundle.putParcelable("POSTS", posts)
-            bundle.putParcelable("CODES", codes)
-            bundle.putString("MSG_TYPE", msgType.toString())
+            bundle.apply {
+                putParcelable("POSTS", posts)
+                putParcelable("CODES", codes)
+                putString("MSG_TYPE", msgType.toString())
+            }
 
-            val fragment = ShowResultFragment()
             fragment.arguments = bundle
             return fragment
         }
@@ -70,7 +75,6 @@ class ShowResultFragment : Fragment() {
         val msgType = arguments?.getString("MSG_TYPE")
         val list = mutableListOf<LayoutPost>()
         var index = 0
-
 
         if (!errorMsg.isNullOrEmpty()) {
             if (code != null) {
