@@ -1,11 +1,10 @@
-package com.example.retrofitdemo.data
+package com.example.retrofitdemo.data.responseData
 
 import android.os.Parcel
 import android.os.Parcelable
 
 class Posts() : ArrayList<Post>(), Parcelable {
-    constructor(parcel: Parcel) : this() {
-    }
+    constructor(parcel: Parcel) : this()
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
     }

@@ -7,12 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.retrofitdemo.R
-import com.example.retrofitdemo.data.Codes
-import com.example.retrofitdemo.data.LayoutPost
-import com.example.retrofitdemo.data.Post
-import com.example.retrofitdemo.data.Posts
+import com.example.retrofitdemo.data.responseData.Codes
+import com.example.retrofitdemo.data.showResultData.LayoutPost
+import com.example.retrofitdemo.data.responseData.Post
+import com.example.retrofitdemo.data.responseData.Posts
 import com.example.retrofitdemo.ui.adapter.PostAdapter
 import com.example.retrofitdemo.data.enums.MessageType
+import com.example.retrofitdemo.data.showResultData.ShowResultArgs
 import kotlinx.android.synthetic.main.fragment_show_result.view.*
 
 class ShowResultFragment : Fragment() {
@@ -57,6 +58,17 @@ class ShowResultFragment : Fragment() {
             fragment.arguments = bundle
             return fragment
         }
+
+        fun getArgs(): ShowResultArgs {
+            val args = ShowResultArgs().apply {
+                fragment.arguments?.let {
+                    this.code = it.getInt("CODE")
+                    this.errorMsg = it.getString("ERROR_MESSAGE") ?: ""
+                    this.msgType = it.getString("MSG_TYPE") ?: ""
+                }
+            }
+            return args
+        }
     }
 
     override fun onCreateView(
@@ -70,27 +82,25 @@ class ShowResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val code = arguments?.getInt("CODE")
-        val errorMsg = arguments?.getString("ERROR_MESSAGE")
-        val msgType = arguments?.getString("MSG_TYPE")
+        val args = getArgs()
         val list = mutableListOf<LayoutPost>()
         var index = 0
 
-        if (!errorMsg.isNullOrEmpty()) {
-            if (code != null) {
-                list.add(LayoutPost(Post(0, errorMsg), code.toInt()))
+        if (args.errorMsg != "") {
+            if (args.code != -1) {
+                list.add(LayoutPost(Post(0, args.errorMsg), args.code))
             }
-        } else if (msgType.equals(MessageType.POSTS_RESULTS.toString())) {
+        } else if (args.msgType == MessageType.POSTS_RESULTS.toString()) {
             val posts = arguments?.getParcelable<Posts>("POSTS") as Posts
             val codes = arguments?.getParcelable<Codes>("CODES") as Codes
             posts.forEach {
                 list.add(LayoutPost(Post(it.id, it.title), codes[index]))
                 index++
             }
-        } else if (msgType.equals(MessageType.POST_RESULT.toString())) {
+        } else if (args.msgType == MessageType.POST_RESULT.toString()) {
             val post = arguments?.getParcelable<Post>("POST") as Post
-            if (code != null) {
-                list.add(LayoutPost(post, code.toInt()))
+            if (args.code != -1) {
+                list.add(LayoutPost(post, args.code))
             }
         }
 

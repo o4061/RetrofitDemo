@@ -1,4 +1,4 @@
-package com.example.retrofitdemo.data
+package com.example.retrofitdemo.data.responseData
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -10,8 +10,7 @@ data class Post(
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)

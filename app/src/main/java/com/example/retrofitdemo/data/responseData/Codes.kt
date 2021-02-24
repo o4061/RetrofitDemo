@@ -1,4 +1,4 @@
-package com.example.retrofitdemo.data
+package com.example.retrofitdemo.data.responseData
 
 import android.os.Parcel
 import android.os.Parcelable

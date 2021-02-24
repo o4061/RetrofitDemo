@@ -1,8 +1,8 @@
 package com.example.retrofitdemo.utils
 
-import com.example.retrofitdemo.data.Codes
-import com.example.retrofitdemo.data.Post
-import com.example.retrofitdemo.data.Posts
+import com.example.retrofitdemo.data.responseData.Codes
+import com.example.retrofitdemo.data.responseData.Post
+import com.example.retrofitdemo.data.responseData.Posts
 import com.example.retrofitdemo.data.enums.RequestType
 
 interface Communicator {

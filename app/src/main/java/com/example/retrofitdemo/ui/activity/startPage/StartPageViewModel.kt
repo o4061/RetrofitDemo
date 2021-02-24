@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.retrofitdemo.data.Post
-import com.example.retrofitdemo.data.Posts
+import com.example.retrofitdemo.data.responseData.Post
+import com.example.retrofitdemo.data.responseData.Posts
 import com.example.retrofitdemo.database.entities.PostDB
 import com.example.retrofitdemo.repository.Repository
 import kotlinx.coroutines.launch

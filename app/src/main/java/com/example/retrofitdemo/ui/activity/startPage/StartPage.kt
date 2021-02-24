@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.retrofitdemo.R
-import com.example.retrofitdemo.data.Codes
-import com.example.retrofitdemo.data.Post
-import com.example.retrofitdemo.data.Posts
+import com.example.retrofitdemo.data.responseData.Codes
+import com.example.retrofitdemo.data.responseData.Post
+import com.example.retrofitdemo.data.responseData.Posts
 import com.example.retrofitdemo.database.entities.PostDB
 import com.example.retrofitdemo.data.enums.MessageType
 import com.example.retrofitdemo.data.enums.RequestType

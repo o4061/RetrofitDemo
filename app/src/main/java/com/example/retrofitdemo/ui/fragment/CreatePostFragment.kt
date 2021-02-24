@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isInvisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.retrofitdemo.R
-import com.example.retrofitdemo.data.Post
+import com.example.retrofitdemo.data.responseData.Post
 import com.example.retrofitdemo.repository.Repository
 import com.example.retrofitdemo.ui.activity.startPage.StartPageViewModel
 import com.example.retrofitdemo.utils.Communicator
@@ -28,13 +28,18 @@ class CreatePostFragment : Fragment() {
 
 
     companion object {
+        private val fragment = CreatePostFragment()
         fun newInstance(requestType: RequestType): CreatePostFragment {
-            val bundle = Bundle()
-            bundle.putString("TYPE", requestType.toString())
-            val fragment = CreatePostFragment()
+            val bundle = Bundle().apply {
+                putString("TYPE", requestType.toString())
+            }
+
             fragment.arguments = bundle
             return fragment
         }
+
+        fun getArgs() =
+            fragment.arguments?.getString("TYPE")
     }
 
 
@@ -47,7 +52,7 @@ class CreatePostFragment : Fragment() {
         viewModel =
             ViewModelProvider(this, viewModelFactory).get(StartPageViewModel::class.java)
 
-        val requestType = arguments?.getString("TYPE")
+        val requestType = getArgs()
 
         if (requestType == RequestType.DELETE.toString() || requestType == RequestType.POST.toString()) {
             view.postTitleInput.visibility = View.INVISIBLE
@@ -68,20 +73,20 @@ class CreatePostFragment : Fragment() {
                     }
 
                     RequestType.UPDATE.toString() -> {
-                        updateRequest(Post(id,title))
+                        updateRequest(Post(id, title))
                     }
                     RequestType.UPLOAD.toString() -> {
-                        uploadRequest(Post(id,title))
+                        uploadRequest(Post(id, title))
                     }
                     RequestType.POST.toString() -> {
-                       postRequest(Post(id,title))
+                        postRequest(Post(id, title))
                     }
                 }
             }
         }
     }
 
-    private fun postRequest(post: Post){
+    private fun postRequest(post: Post) {
         viewModel.getPost(post.id)
 
         viewModel.postResponse.observe(viewLifecycleOwner, { response ->
@@ -101,7 +106,7 @@ class CreatePostFragment : Fragment() {
         })
     }
 
-    private fun uploadRequest(post: Post){
+    private fun uploadRequest(post: Post) {
         viewModel.uploadPost(post)
 
         viewModel.postResponse.observe(viewLifecycleOwner, { response ->
@@ -121,7 +126,7 @@ class CreatePostFragment : Fragment() {
         })
     }
 
-    private fun updateRequest(post: Post){
+    private fun updateRequest(post: Post) {
         viewModel.updatePost(post)
 
         viewModel.postResponse.observe(viewLifecycleOwner, { response ->
@@ -145,7 +150,7 @@ class CreatePostFragment : Fragment() {
         viewModel.deletePost(post.id)
 
         viewModel.postResponse.observe(viewLifecycleOwner, { response ->
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 resultPost = Post(post.id, "The post deleted")
                 resultCode = response.code()
 

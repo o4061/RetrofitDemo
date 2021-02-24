@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitdemo.R
-import com.example.retrofitdemo.data.LayoutPost
+import com.example.retrofitdemo.data.showResultData.LayoutPost
 import kotlinx.android.synthetic.main.post_object.view.*
 
 class PostAdapter(
