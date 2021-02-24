@@ -100,7 +100,7 @@ class StartPage : AppCompatActivity(), Communicator {
             viewModel.getPostsFromDb(this)
             viewModel.postsDb.observe(this, { response ->
                 if (response.isEmpty()) {
-                    Toast.makeText(this, "DataBase is empty", Toast.LENGTH_SHORT).show()
+                    notifyUser("DataBase is empty")
                 } else {
                     response.forEach {
                         posts.add(Post(it.id, it.title))
@@ -111,7 +111,6 @@ class StartPage : AppCompatActivity(), Communicator {
             })
         }
     }
-
 
     override fun sendPostToShowResultFragment(post: Post, code: Int) {
         val showResultFragment =
@@ -139,7 +138,7 @@ class StartPage : AppCompatActivity(), Communicator {
             val createPostFragment = CreatePostFragment.newInstance(requestType)
             fragmentTransaction(createPostFragment)
         } else {
-            Toast.makeText(this, "No internet Connection", Toast.LENGTH_SHORT).show()
+            notifyUser("No internet Connection")
         }
     }
 
@@ -163,5 +162,9 @@ class StartPage : AppCompatActivity(), Communicator {
             postsDB.add(PostDB(it.id, it.title.toString()))
         }
         viewModel.addPosts(this, postsDB)
+    }
+
+    private fun notifyUser(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

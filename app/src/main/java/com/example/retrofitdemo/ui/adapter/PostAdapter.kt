@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitdemo.R
+import com.example.retrofitdemo.data.enums.CodeStatus
 import com.example.retrofitdemo.data.showResultData.LayoutPost
 import kotlinx.android.synthetic.main.post_object.view.*
 
@@ -26,9 +27,9 @@ class PostAdapter(
         val currentItem = layoutPosts[position]
 
         holder.itemView.apply {
-            if (currentItem.code == 200 || currentItem.code == 201 || currentItem.code == 0) {
+            if (currentItem.code == CodeStatus.SUCCESS_A.value || currentItem.code == CodeStatus.SUCCESS_B.value || currentItem.code == CodeStatus.SUCCESS_OFFLINE.value) {
                 postTextView.text =
-                    currentItem.post.id.toString() + ") " + currentItem.post.title
+                    "${currentItem.post.id.toString()}) ${currentItem.post.title}"
                 codeTextView.text = currentItem.code.toString()
                 codeTextView.setTextColor(Color.GREEN)
             } else {

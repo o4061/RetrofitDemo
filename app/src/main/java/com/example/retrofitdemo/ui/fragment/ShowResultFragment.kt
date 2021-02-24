@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.retrofitdemo.R
+import com.example.retrofitdemo.data.enums.CodeStatus
 import com.example.retrofitdemo.data.responseData.Codes
 import com.example.retrofitdemo.data.showResultData.LayoutPost
 import com.example.retrofitdemo.data.responseData.Post
@@ -87,7 +88,7 @@ class ShowResultFragment : Fragment() {
         var index = 0
 
         if (args.errorMsg != "") {
-            if (args.code != -1) {
+            if (args.code != CodeStatus.EMPTY.value) {
                 list.add(LayoutPost(Post(0, args.errorMsg), args.code))
             }
         } else if (args.msgType == MessageType.POSTS_RESULTS.toString()) {
@@ -99,7 +100,7 @@ class ShowResultFragment : Fragment() {
             }
         } else if (args.msgType == MessageType.POST_RESULT.toString()) {
             val post = arguments?.getParcelable<Post>("POST") as Post
-            if (args.code != -1) {
+            if (args.code != CodeStatus.EMPTY.value) {
                 list.add(LayoutPost(post, args.code))
             }
         }
