@@ -17,13 +17,13 @@ import com.example.retrofitdemo.repository.Repository
 import com.example.retrofitdemo.ui.fragment.CreatePostFragment
 import com.example.retrofitdemo.ui.fragment.ShowResultFragment
 import com.example.retrofitdemo.utils.*
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.start_page.*
 
 class StartPage : AppCompatActivity(), Communicator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.start_page)
 
         val repository = Repository()
         val viewModelFactory = StartPageViewModelFactory(repository)
