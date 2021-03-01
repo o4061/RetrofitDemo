@@ -6,17 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.retrofitdemo.R
+import com.example.retrofitdemo.data.enums.MessageType
+import com.example.retrofitdemo.data.enums.RequestType
 import com.example.retrofitdemo.data.responseData.Codes
 import com.example.retrofitdemo.data.responseData.Post
 import com.example.retrofitdemo.data.responseData.Posts
 import com.example.retrofitdemo.database.entities.PostDB
-import com.example.retrofitdemo.data.enums.MessageType
-import com.example.retrofitdemo.data.enums.RequestType
 import com.example.retrofitdemo.network.NetworkListener
 import com.example.retrofitdemo.repository.Repository
 import com.example.retrofitdemo.ui.fragment.CreatePostFragment
 import com.example.retrofitdemo.ui.fragment.ShowResultFragment
-import com.example.retrofitdemo.utils.*
+import com.example.retrofitdemo.utils.Communicator
+import com.example.retrofitdemo.utils.StartPageViewModelFactory
 import kotlinx.android.synthetic.main.start_page.*
 
 class StartPage : AppCompatActivity(), Communicator {

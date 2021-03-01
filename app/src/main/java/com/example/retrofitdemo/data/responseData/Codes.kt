@@ -1,26 +1,7 @@
 package com.example.retrofitdemo.data.responseData
 
-import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-class Codes() : ArrayList<Int>(), Parcelable {
-    constructor(parcel: Parcel) : this() {
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Codes> {
-        override fun createFromParcel(parcel: Parcel): Codes {
-            return Codes(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Codes?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+@Parcelize
+class Codes() : ArrayList<Int>(), Parcelable
